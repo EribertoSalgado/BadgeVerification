@@ -33,7 +33,7 @@ def find_user_in_db(FASCN):
         )
         with connection.cursor() as cursor:
             # Assuming your table is named 'users' and contains a 'fasc_n' column
-            sql = "SELECT FASCN FROM LEAP WHERE FASCN = %s"
+            sql = "SELECT FASCN, name, clearance, expiration_date, affiliation FROM LEAP WHERE FASCN = %s"
             cursor.execute(sql, (FASCN,))
             result = cursor.fetchone()
             return result
@@ -75,7 +75,11 @@ def main():
                 if user_data:
                     print("Match found!")
                     print("--- User Details ---")
-                    print(f"Name: {user_data['FASCN']}")
+                    print(f"FASCN: {user_data['FASCN']}")
+                    print(f"Name: {user_data['name']}")
+                    print(f"Clearance: {user_data['clearance']}")
+                    print(f"Expiration Date: {user_data['expiration_date']}")
+                    print(f"Affiliation: {user_data['affiliation']}")
                     print("--------------------")
                 else:
                     print("No matching user found in the database.")
