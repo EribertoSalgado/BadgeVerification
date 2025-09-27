@@ -32,7 +32,9 @@ def find_user_in_db(FASCN):
             cursorclass=pymysql.cursors.DictCursor
         )
         with connection.cursor() as cursor:
-            # Assuming your table is named 'users' and contains a 'fasc_n' column
+            # Select these columns from this table where the row meets this condition.
+            # WHERE: only returns rows where the column matches exactly the value give. It is a "filter condition"
+            # %s is a placeholder that pymysql fills in with the actual FASC-N value you captured from the badge.
             sql = "SELECT FASCN, name, clearance, expiration_date, affiliation FROM LEAP WHERE FASCN = %s"
             cursor.execute(sql, (FASCN,))
             result = cursor.fetchone()
@@ -98,4 +100,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
